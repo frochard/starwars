@@ -25,17 +25,19 @@ function searchCharacter($scope, $http,$log,starwarsFactory){
   var urlList = swApiUrl+"people/";
   //On initialise la table
   $scope.APIList=[];
-  //On definit
-  var exec = function(url){
+  //On definit la fonction de parcours des pages de recherche
+  var getDataPage = function(url){
     $http.get(url).then(function(response1) {
       $scope.APIList= $scope.APIList.concat(response1.data.results);
+      //Test si on a une page suivante de resultats
       if (response1.data.next != null)
-        exec(response1.data.next);
+        //Appel récursif de la fonction pour récupérer les données de la page suivante
+        getDataPage(response1.data.next);
     });
-
   }
 
-  exec(urlList);
+  //On récupère la liste des personnages de toutes les pages de recherche
+  getDataPage(urlList);
 
   $scope.$log = $log;
 
@@ -71,7 +73,6 @@ function infoCharacter($scope, $http, $log, characterInfo, starwarsFactory){
 
 /* Service qui récupère les infos du personnage*/
 swApp.factory('characterInfo', function($resource) {return $resource(swApiUrl+"people/:id/",{id:'@id'});});
-
 
 /* Service qui stocke le personnage courant*/
 swApp.factory('starwarsFactory', function() {

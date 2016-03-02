@@ -14,8 +14,7 @@ var swApp = angular.module('starwarsApp', [
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
-  ]);
+    'ngTouch']);
 swApp.config(function ($routeProvider) {
     $routeProvider
       .when('/', {
@@ -23,15 +22,20 @@ swApp.config(function ($routeProvider) {
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
+      .when('/characters', {
+        templateUrl: 'views/character.html',
+        controller: 'searchCtrl',
+        controllerAs: 'character'
+      })
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
-      .when('/characters', {
-        templateUrl: 'views/character.html',
-        controller: 'searchCtrl',
-        controllerAs: 'character'
+      .when('/contact', {
+        templateUrl: 'views/contact.html',
+        controller: 'ContactCtrl',
+        controllerAs: 'contact'
       })
       .otherwise({
         redirectTo: '/'
