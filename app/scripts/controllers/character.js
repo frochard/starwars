@@ -21,66 +21,30 @@ function searchCharacter($scope, $http,$log,starwarsFactory){
     {"name": "Darth Vader","url": "http://swapi.co/api/people/4/"}
   ];
 
+  //On recupere l'URL pour lister les personnages
   var urlList = swApiUrl+"people/";
- //Cette solution fonctionne
-  $http.get(urlList).then(function(response) {
-    $scope.APIdata = response.data;
-    $scope.APIList = $scope.APIdata.results;
-  });
-//    console.log(response.data);
-/*
-  });
+  //On initialise la table
+  $scope.APIList=[];
+  //On definit
+  var exec = function(url){
+    $http.get(url).then(function(response1) {
+      $scope.APIList= $scope.APIList.concat(response1.data.results);
+      if (response1.data.next != null)
+        exec(response1.data.next);
+    });
 
-  var next = function (url) {
-    var list2
-    $http.get(url).then(function(response) {
-      list2 = response.data;
-      console.log(list2);
-    })
-    return list2
   }
 
-  $http.get(urlList).then(function(response) {
-    $scope.APIdata = response.data;
-    $scope.APIList = $scope.APIdata.results;
-    var url = response.data.next;
-
-//    console.log(response.data);
-
-  });
-
-*/
-
-  //Solution alternative
-
-  /*var data= $http.get(urlList).then(function(response){return response.data});
-  console.log(data);*/
-
-/*  var data= $http.get(urlList);//.then(function(response) {return response.data;});
-  console.log(data);
-  var results=data.results;
-  console.log(results);
-  var i =2;
-   var nextPage="http://swapi.co/api/people/?page="+i;
-   console.log(data.next);
-   while(data.next=nextPage){
-     data= $http.get(nextPage);//.then(function(response) {return response.data;});
-     results=results.concat($scope.APIdata.results);
-   i++;
-   nextPage="http://swapi.co/api/people/?page="+i;
-   }
-   $scope.APIList = $scope.APIdata.results;
-
-  var recupNext= function(url){
-  }*/
-
-
+  exec(urlList);
 
   $scope.$log = $log;
 
   $scope.go = function(url) {
+    //On supprime le dernier caractère /
     var urlSansDernierChar = url.slice(0, -1)
+    //On récupère la valeur de l'id après le dernier caractère /
     var idUrl = urlSansDernierChar.substring(urlSansDernierChar.lastIndexOf('/') + 1);
+    //On change le personnage courant dans notre service
     starwarsFactory.setId(idUrl);
   }
 }
@@ -104,19 +68,21 @@ function infoCharacter($scope, $http, $log, characterInfo, starwarsFactory){
 /* Definition des services */
 /******************************/
 
-/* Déclaration d'un service qui permet d'envoyer les infos du controler pour la recherche vers le controler pour l'affichage*/
-swApp.factory('starwarsFactory', function() {
-  var data= {id: 0};
 
-  data.setId = function(num){
-    data.id=num;
-  }
-  data.getId = function (){
-    return data.id;
-  }
-  return data;
-});
-
-/* Déclaration d'un service qui permet de récuperer un pokemon (on l'appellera avec "pokeInfo.get"):
- ce service lance des requete sur un lien précis*/
+/* Service qui récupère les infos du personnage*/
 swApp.factory('characterInfo', function($resource) {return $resource(swApiUrl+"people/:id/",{id:'@id'});});
+
+
+/* Service qui stocke le personnage courant*/
+swApp.factory('starwarsFactory', function() {
+  var character= {id: 0};
+  //Setter qui renseigne l'Id du perso courant
+  character.setId = function(num){
+    character.id=num;
+  }
+  //Setter qui recupere l'Id du perso courant
+  character.getId = function (){
+    return character.id;
+  }
+  return character;
+});
