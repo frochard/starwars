@@ -1,0 +1,30 @@
+<div text-align: center; xmlns:text-align="http://www.w3.org/1999/xhtml">
+
+  <h1 class="Starwars">Starwars</h1>
+
+  <!--Search-->
+  <div ng-controller="searchCtrl">
+
+    <label class="starwars">Filtrer sur le nom : </label> <input type="text" name="userName" ng-model="filtreNom"/><br>
+
+    <label class="starwars" for="characterSelection"> selectionner un personnage : </label>
+    <select name="characterSelection" id="characterSelection" ng-model="selectedCharacter">
+      <option ng-repeat="option in APIList | filter:filtreNom" value="{{option.url}}">{{option.name}}</option>
+    </select>
+
+    <button ng-click="go(selectedCharacter)"> Go !</button>
+
+  </div>
+
+  <!--Character information-->
+  <div class="starwars" ng-controller="infoCtrl">
+    <p id="characterId">No. {{id}} </p>
+    <p id="characterName">Name : {{character.name}} </p>
+    <p id="characterHeight">height : {{character.height}} </p>
+    <p id="characterWeight">mass : {{character.mass}} </p>
+    <img class="roundedImage" src="images/{{id}}.jpg" alt="{{character.name}}" style="width:200px;height:150px;">
+    <!--      <ul>
+            <li ng-repeat="line in {{infoCharacter.moves}}">{{line.move}}</li>
+          </ul>-->
+  </div>
+</div>
