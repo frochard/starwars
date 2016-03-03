@@ -52,15 +52,22 @@ function searchCharacter($scope, $http,$log,starwarsFactory){
 }
 
 function infoCharacter($scope, $http, $log, characterInfo, starwarsFactory){
-  $scope.starwarsFactory = starwarsFactory; //ATTENTION: Ne pas oublier de rajouter le service dans le scope si on veut utiliser $scope.$watch
-  //On rappelle ce traitement à chaque changement de variable de sendSearch.id
+  $scope.starwarsFactory = starwarsFactory;
+  //On observe si le personnage courant change avec la fonction $watch
   $scope.$watch('starwarsFactory.getId()', function() {
-    //On récupere en indiquant l'id un pokemon
     var character = characterInfo.get({id:starwarsFactory.getId()});
-    //Une fois le résultat récuperer on va enregistrer dans des variables les infos
+    //on enregistre les infos dans des variables
     character.$promise.then(function (result) {
       $scope.character = result;
       $scope.id = starwarsFactory.getId();
+      //On recupere les vaisseaux spatiales
+      $scope.starships = [];
+      //Parcours des starships
+      for(var urlStarShip in result.starships){
+        $http.get(result.starships[urlStarShip]).then(function(response1) {
+          $scope.starships.push(response1.data.name);
+        });
+      }
     }, true);
   });
 }
@@ -69,7 +76,6 @@ function infoCharacter($scope, $http, $log, characterInfo, starwarsFactory){
 /******************************/
 /* Definition des services */
 /******************************/
-
 
 /* Service qui récupère les infos du personnage*/
 swApp.factory('characterInfo', function($resource) {return $resource(swApiUrl+"people/:id/",{id:'@id'});});

@@ -1,4 +1,19 @@
-<div text-align: center; xmlns:text-align="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Starwars characters</title>
+
+  <style>
+    body
+    {
+      background-image:url("../images/intro-bg.jpg");
+      background-size:cover;
+    }
+  </style>
+</head>
+<body>
+<div text-align: center; xmlns:text-align="http://www.w3.org/1999/xhtml" >
 
   <h1 class="Starwars">Starwars</h1>
 
@@ -18,13 +33,17 @@
 
   <!--Character information-->
   <div class="starwars" ng-controller="infoCtrl">
-    <p id="characterId">No. {{id}} </p>
-    <p id="characterName">Name : {{character.name}} </p>
-    <p id="characterHeight">height : {{character.height}} </p>
-    <p id="characterWeight">mass : {{character.mass}} </p>
-    <img class="roundedImage" src="images/{{id}}.jpg" alt="{{character.name}}" style="width:200px;height:150px;">
-    <!--      <ul>
-            <li ng-repeat="line in {{infoCharacter.moves}}">{{line.move}}</li>
-          </ul>-->
+    <p><label id="characterId">No. {{id}} </label></p>
+    <p><label id="characterName">Name : {{character.name}} </label></p>
+    <p><label id="characterHeight">height : {{character.height}} </label></p>
+    <p><label id="characterWeight">mass : {{character.mass}} </label></p>
+    <p><label id="characterHairColor">haircolor : {{character.hair_color}} </label></p>
+    <p><label id="characterEyeColor">eye color : {{character.eye_color}} </label></p>
+    <p><label id="characterBirthYear">birth_year : {{character.birth_year}} </label></p>
+    <img class="roundedImage" src="images/{{id}}.jpg" alt="{{character.name}}" style="width:200px;height:200px;">
+    <p><label><ul>starships :
+      <li ng-repeat="line in starships">{{line}}</li>
+    </ul></label></p>
   </div>
 </div>
+</body>
