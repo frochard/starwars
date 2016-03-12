@@ -27,7 +27,7 @@
       <option ng-repeat="option in APIList | filter:filtreNom" value="{{option.url}}">{{option.name}}</option>
     </select>
 
-    <button ng-click="go(selectedCharacter)"> Go !</button>
+    <a class="btn btn-primary" ng-click="go(selectedCharacter)">Search <span class="glyphicon glyphicon-search"></span></a>
 
   </div>
 
