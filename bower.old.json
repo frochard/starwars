@@ -1,0 +1,39 @@
+{
+  "name": "starwars",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular-carousel-3d": "*"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.4.0"
+  },
+  "appPath": "app",
+  "moduleName": "starwarsApp",
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    }
+  },
+  "resolutions": {
+    "angular": "1.5.0"
+  },
+  "homepage": "https://github.com/frochard/starwars",
+  "authors": [
+    "frochard <user1@148.60.14.89>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
